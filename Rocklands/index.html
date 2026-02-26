@@ -678,13 +678,17 @@ body {
   background: var(--gradient-1);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  background-clip: text;
   min-width: 48px;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .highlight-text {
   font-size: 13px;
   color: var(--text-secondary);
   line-height: 1.5;
+  min-width: 0;
 }
 
 .highlight-text strong {
