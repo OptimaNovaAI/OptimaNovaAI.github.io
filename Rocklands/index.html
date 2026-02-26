@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rocklands x OptimaNova AI</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0a1628;
+  --deep-blue: #0f2140;
+  --accent-blue: #3b82f6;
+  --accent-cyan: #06b6d4;
+  --accent-purple: #8b5cf6;
+  --accent-magenta: #c026d3;
+  --warm-white: #f8fafc;
+  --text-primary: #e2e8f0;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --card-bg: rgba(15, 33, 64, 0.6);
+  --card-border: rgba(59, 130, 246, 0.15);
+  --gradient-1: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  --gradient-2: linear-gradient(135deg, #06b6d4, #3b82f6);
+  --gradient-3: linear-gradient(135deg, #8b5cf6, #c026d3);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--navy);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* Background effects */
+.bg-grid {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: 
+    linear-gradient(rgba(59, 130, 246, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59, 130, 246, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.bg-glow {
+  position: fixed;
+  width: 600px; height: 600px;
+  border-radius: 50%;
+  filter: blur(150px);
+  opacity: 0.12;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.bg-glow-1 { top: -200px; right: -100px; background: var(--accent-blue); }
+.bg-glow-2 { bottom: -200px; left: -100px; background: var(--accent-purple); }
+.bg-glow-3 { top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--accent-cyan); opacity: 0.05; }
+
+/* Container */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Header */
+.header {
+  padding: 48px 0 32px;
+  text-align: center;
+  position: relative;
+}
+
+.header-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--accent-cyan);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 28px;
+  animation: fadeDown 0.6s ease-out;
+}
+
+.header-badge::before {
+  content: '';
+  width: 6px; height: 6px;
+  background: var(--accent-cyan);
+  border-radius: 50%;
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.header-logos {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 32px;
+  animation: fadeDown 0.6s ease-out 0.1s both;
+}
+
+.logo-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+}
+
+.logo-rocklands {
+  background: linear-gradient(135deg, #ef4444, #f97316);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.logo-x {
+  color: var(--text-muted);
+  font-size: 16px;
+  font-weight: 300;
+}
+
+.logo-optima {
+  background: var(--gradient-1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(32px, 5vw, 48px);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -1px;
+  margin-bottom: 16px;
+  animation: fadeDown 0.6s ease-out 0.2s both;
+}
+
+.header h1 .gradient-text {
+  background: var(--gradient-2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.header-sub {
+  font-size: 17px;
+  color: var(--text-secondary);
+  max-width: 640px;
+  margin: 0 auto;
+  animation: fadeDown 0.6s ease-out 0.3s both;
+}
+
+.header-date {
+  margin-top: 20px;
+  font-size: 13px;
+  color: var(--text-muted);
+  animation: fadeDown 0.6s ease-out 0.35s both;
+}
+
+/* Section styles */
+.section {
+  padding: 48px 0;
+}
+
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent-cyan);
+  margin-bottom: 12px;
+}
+
+.section-label::before {
+  content: '';
+  width: 20px; height: 1px;
+  background: var(--accent-cyan);
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(24px, 3.5vw, 34px);
+  font-weight: 600;
+  letter-spacing: -0.5px;
+  margin-bottom: 12px;
+}
+
+.section-desc {
+  color: var(--text-secondary);
+  font-size: 15px;
+  max-width: 600px;
+  margin-bottom: 36px;
+}
+
+/* Divider */
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--card-border), transparent);
+  margin: 0;
+}
+
+/* Cards */
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 32px;
+  backdrop-filter: blur(20px);
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+.card:hover {
+  border-color: rgba(59, 130, 246, 0.3);
+  transform: translateY(-2px);
+}
+
+/* What We Heard Section */
+.heard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.heard-card {
+  position: relative;
+  padding-left: 20px;
+}
+
+.heard-card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 8px; bottom: 8px;
+  width: 3px;
+  border-radius: 3px;
+}
+
+.heard-card:nth-child(1)::before { background: var(--gradient-1); }
+.heard-card:nth-child(2)::before { background: var(--gradient-2); }
+.heard-card:nth-child(3)::before { background: var(--gradient-3); }
+.heard-card:nth-child(4)::before { background: linear-gradient(135deg, #f97316, #ef4444); }
+.heard-card:nth-child(5)::before { background: linear-gradient(135deg, #10b981, #06b6d4); }
+
+.heard-card h4 {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--warm-white);
+}
+
+.heard-card p {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* Opportunity Cards */
+.opp-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+.opp-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.opp-card .opp-icon {
+  width: 48px; height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+
+.opp-card:nth-child(1) .opp-icon { background: rgba(59, 130, 246, 0.15); }
+.opp-card:nth-child(2) .opp-icon { background: rgba(6, 182, 212, 0.15); }
+.opp-card:nth-child(3) .opp-icon { background: rgba(139, 92, 246, 0.15); }
+.opp-card:nth-child(4) .opp-icon { background: rgba(192, 38, 211, 0.15); }
+.opp-card:nth-child(5) .opp-icon { background: rgba(16, 185, 129, 0.15); }
+.opp-card:nth-child(6) .opp-icon { background: rgba(249, 115, 22, 0.15); }
+
+.opp-card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.opp-card p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.opp-tag {
+  display: inline-block;
+  margin-top: 14px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.tag-high { background: rgba(59, 130, 246, 0.15); color: var(--accent-blue); }
+.tag-medium { background: rgba(139, 92, 246, 0.15); color: var(--accent-purple); }
+.tag-emerging { background: rgba(6, 182, 212, 0.15); color: var(--accent-cyan); }
+
+/* Industry Stats */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-bottom: 16px;
+}
+
+.stat-card {
+  text-align: center;
+  padding: 28px 20px;
+}
+
+.stat-number {
+  font-family: 'Playfair Display', serif;
+  font-size: 42px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.stat-card:nth-child(1) .stat-number { background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.stat-card:nth-child(2) .stat-number { background: var(--gradient-2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.stat-card:nth-child(3) .stat-number { background: var(--gradient-3); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.stat-card:nth-child(4) .stat-number { background: linear-gradient(135deg, #10b981, #06b6d4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+.stat-label {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.stat-source {
+  text-align: center;
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 8px;
+}
+
+/* Timeline / Process */
+.timeline {
+  position: relative;
+  padding-left: 40px;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 15px; top: 0; bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, var(--accent-blue), var(--accent-purple), var(--accent-magenta));
+  border-radius: 2px;
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 36px;
+}
+
+.timeline-item:last-child { margin-bottom: 0; }
+
+.timeline-dot {
+  position: absolute;
+  left: -33px; top: 4px;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  border: 2px solid var(--accent-blue);
+  background: var(--navy);
+}
+
+.timeline-item:nth-child(2) .timeline-dot { border-color: var(--accent-cyan); }
+.timeline-item:nth-child(3) .timeline-dot { border-color: var(--accent-purple); }
+.timeline-item:nth-child(4) .timeline-dot { border-color: var(--accent-magenta); }
+
+.timeline-week {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--accent-cyan);
+  margin-bottom: 6px;
+}
+
+.timeline-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.timeline-desc {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.timeline-deliverable {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+  padding: 5px 12px;
+  background: rgba(59, 130, 246, 0.08);
+  border: 1px solid rgba(59, 130, 246, 0.15);
+  border-radius: 8px;
+  font-size: 12px;
+  color: var(--accent-blue);
+  font-weight: 500;
+}
+
+/* Pricing */
+.pricing-section {
+  text-align: center;
+}
+
+.pricing-card {
+  max-width: 560px;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(59, 130, 246, 0.25);
+}
+
+.pricing-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--gradient-1);
+}
+
+.pricing-header {
+  margin-bottom: 24px;
+}
+
+.pricing-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--accent-cyan);
+  margin-bottom: 8px;
+}
+
+.pricing-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.pricing-amount {
+  font-family: 'Playfair Display', serif;
+  font-size: 48px;
+  font-weight: 700;
+  background: var(--gradient-1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 20px 0 4px;
+}
+
+.pricing-note {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.pricing-urgency {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 20px 0;
+  padding: 10px 20px;
+  background: rgba(249, 115, 22, 0.1);
+  border: 1px solid rgba(249, 115, 22, 0.2);
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #fb923c;
+}
+
+.pricing-urgency::before {
+  content: '⏱';
+  font-size: 16px;
+}
+
+.pricing-regular {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+}
+
+.pricing-regular span {
+  text-decoration: line-through;
+}
+
+.pricing-includes {
+  text-align: left;
+  border-top: 1px solid var(--card-border);
+  padding-top: 24px;
+}
+
+.pricing-includes h4 {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+
+.pricing-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.pricing-check {
+  flex-shrink: 0;
+  width: 20px; height: 20px;
+  border-radius: 6px;
+  background: rgba(59, 130, 246, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: var(--accent-blue);
+  margin-top: 1px;
+}
+
+/* CTA Section */
+.cta-section {
+  text-align: center;
+  padding: 64px 0 48px;
+}
+
+.cta-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(26px, 4vw, 36px);
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.cta-desc {
+  color: var(--text-secondary);
+  font-size: 16px;
+  margin-bottom: 32px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cta-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 36px;
+  background: var(--gradient-1);
+  color: white;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 24px rgba(59, 130, 246, 0.3);
+}
+
+.cta-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(59, 130, 246, 0.4);
+}
+
+.cta-button::after {
+  content: '→';
+  font-size: 18px;
+  transition: transform 0.2s ease;
+}
+
+.cta-button:hover::after {
+  transform: translateX(4px);
+}
+
+.cta-sub {
+  margin-top: 16px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* About OptimaNova */
+.about-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.about-text h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.about-text p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 12px;
+}
+
+.about-clients {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.client-tag {
+  padding: 5px 12px;
+  background: rgba(59, 130, 246, 0.08);
+  border: 1px solid rgba(59, 130, 246, 0.12);
+  border-radius: 8px;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.about-highlights {
+  display: grid;
+  gap: 16px;
+}
+
+.highlight-item {
+  display: flex;
+  gap: 16px;
+  padding: 16px;
+  background: rgba(15, 33, 64, 0.4);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+}
+
+.highlight-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 700;
+  background: var(--gradient-1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  min-width: 48px;
+}
+
+.highlight-text {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.highlight-text strong {
+  display: block;
+  color: var(--warm-white);
+  font-size: 14px;
+  margin-bottom: 2px;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 40px 0;
+  border-top: 1px solid var(--card-border);
+}
+
+.footer p {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.footer a {
+  color: var(--accent-blue);
+  text-decoration: none;
+}
+
+/* Animations */
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-in {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.animate-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .about-card { grid-template-columns: 1fr; }
+  .stats-row { grid-template-columns: repeat(2, 1fr); }
+  .opp-grid { grid-template-columns: 1fr; }
+  .heard-grid { grid-template-columns: 1fr; }
+  .container { padding: 0 16px; }
+  .card { padding: 24px; }
+}
+</style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+<div class="bg-glow bg-glow-1"></div>
+<div class="bg-glow bg-glow-2"></div>
+<div class="bg-glow bg-glow-3"></div>
+
+<div class="container">
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-badge">Prepared for Rocklands</div>
+    <div class="header-logos">
+      <span class="logo-text logo-rocklands">Rocklands</span>
+      <span class="logo-x">&times;</span>
+      <span class="logo-text logo-optima">OptimaNova AI</span>
+    </div>
+    <h1>Your AI Roadmap to<br><span class="gradient-text">Operate Like the Fortune 500</span></h1>
+    <p class="header-sub">A personalized overview of how artificial intelligence can power Rocklands' growth across your storefronts, catering operations, and food trucks.</p>
+    <p class="header-date">Prepared February 27, 2026 &nbsp;|&nbsp; Based on our conversation, February 26</p>
+  </header>
+
+  <div class="divider"></div>
+
+  <!-- WHAT WE HEARD -->
+  <section class="section animate-in">
+    <div class="section-label">Discovery</div>
+    <h2 class="section-title">What We Heard</h2>
+    <p class="section-desc">From our conversation with John, Beatriz, Carmen, Rebecca, and Waylon on February 26, 2026.</p>
+
+    <div class="heard-grid">
+      <div class="card heard-card">
+        <h4>AI-Curious, Seeking Direction</h4>
+        <p>Your team is already using AI for creative work and has been researching broader applications. The missing piece isn't interest. It's a clear roadmap.</p>
+      </div>
+      <div class="card heard-card">
+        <h4>Human-Forward Culture</h4>
+        <p>Rocklands values its people. Any AI implementation must amplify your team's strengths, not replace the human touch that defines your brand.</p>
+      </div>
+      <div class="card heard-card">
+        <h4>Complex, Multi-Unit Operations</h4>
+        <p>Three storefronts, a catering division, food trucks, and a corporate office. Each operates differently but needs to work as one connected system.</p>
+      </div>
+      <div class="card heard-card">
+        <h4>Seasonal Workflow Pressures</h4>
+        <p>Slow season through mid-April, then peak demand through summer. New processes need to be established now so they're habitual before the rush.</p>
+      </div>
+      <div class="card heard-card">
+        <h4>Varied Tech Comfort Levels</h4>
+        <p>Your team ranges from tech-savvy to tech-cautious. Any solution has to meet each person where they are on their AI journey.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- OPPORTUNITY MAP -->
+  <section class="section animate-in">
+    <div class="section-label">Opportunities</div>
+    <h2 class="section-title">Where AI Creates Value for Rocklands</h2>
+    <p class="section-desc">Based on your current workflows and the pain points discussed, here's where we see the highest-impact opportunities.</p>
+
+    <div class="opp-grid">
+      <div class="card opp-card">
+        <div class="opp-icon">📨</div>
+        <h3>Automated Order Intake &amp; Routing</h3>
+        <p>AI monitors incoming emails and online inquiries, categorizes them by type (delivery, staffed event, pickup), and routes to the right department automatically. Sales, catering ops, and store teams all stay informed without manual forwarding.</p>
+        <span class="opp-tag tag-high">High Impact</span>
+      </div>
+
+      <div class="card opp-card">
+        <div class="opp-icon">📋</div>
+        <h3>Proposal &amp; Contract Acceleration</h3>
+        <p>Reduce contract turnaround from 30+ minutes to under 10. AI drafts proposals based on event type, headcount, and past client preferences. Your team reviews, adjusts, and sends. The human touch stays. The busywork goes.</p>
+        <span class="opp-tag tag-high">High Impact</span>
+      </div>
+
+      <div class="card opp-card">
+        <div class="opp-icon">📊</div>
+        <h3>Leadership Dashboard</h3>
+        <p>A real-time view for John and Michelle showing orders in pipeline, revenue tracking, year-over-year comparisons, and seasonal forecasting. No more assembling reports manually. The data tells the story.</p>
+        <span class="opp-tag tag-high">High Impact</span>
+      </div>
+
+      <div class="card opp-card">
+        <div class="opp-icon">🔄</div>
+        <h3>Client Reactivation Engine</h3>
+        <p>Leverage 30+ years of client data. AI identifies repeat customers, tracks booking patterns, and triggers personalized outreach before their typical ordering window. "You booked 200 plates for your June picnic last year. Planning again?"</p>
+        <span class="opp-tag tag-medium">Medium Impact</span>
+      </div>
+
+      <div class="card opp-card">
+        <div class="opp-icon">⭐</div>
+        <h3>Review Monitoring &amp; Response</h3>
+        <p>AI scans Google, Yelp, and social media for new reviews, drafts response suggestions in Rocklands' voice, and flags issues that need attention. Stay responsive without someone refreshing review sites all day.</p>
+        <span class="opp-tag tag-medium">Medium Impact</span>
+      </div>
+
+      <div class="card opp-card">
+        <div class="opp-icon">📦</div>
+        <h3>Inventory Forecasting</h3>
+        <p>Predict ingredient needs across all locations using historical sales data, upcoming orders, weather, and seasonal patterns. Reduce waste, prevent shortages, and optimize purchasing across storefronts and catering.</p>
+        <span class="opp-tag tag-emerging">Emerging</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- INDUSTRY CONTEXT -->
+  <section class="section animate-in">
+    <div class="section-label">Industry Context</div>
+    <h2 class="section-title">AI in Restaurants: Where the Industry Stands</h2>
+    <p class="section-desc">Data from Deloitte's 2025 survey of 375 restaurant executives across 11 countries.</p>
+
+    <div class="stats-row">
+      <div class="card stat-card">
+        <div class="stat-number">82%</div>
+        <div class="stat-label">of restaurant executives are increasing AI investment this year</div>
+      </div>
+      <div class="card stat-card">
+        <div class="stat-number">55%</div>
+        <div class="stat-label">use AI daily for inventory management</div>
+      </div>
+      <div class="card stat-card">
+        <div class="stat-number">60%</div>
+        <div class="stat-label">deploy AI chatbots for orders and reservations daily</div>
+      </div>
+      <div class="card stat-card">
+        <div class="stat-number">48%</div>
+        <div class="stat-label">say identifying the right use cases is the #1 challenge</div>
+      </div>
+    </div>
+    <p class="stat-source">Source: Deloitte, "How AI is Revolutionizing Restaurants," 2025</p>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- PROCESS / TIMELINE -->
+  <section class="section animate-in">
+    <div class="section-label">The Engagement</div>
+    <h2 class="section-title">What a 12-Week Sprint Looks Like</h2>
+    <p class="section-desc">A phased approach designed to fit Rocklands' seasonality. Discovery and foundations before April. Systems in place before peak season.</p>
+
+    <div class="card" style="padding: 40px;">
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-week">Weeks 1-2: Discovery</div>
+          <div class="timeline-title">Listen, Learn, Diagnose</div>
+          <div class="timeline-desc">Company-wide AI readiness survey (5 minutes, mobile-friendly). One-on-one conversations with John and key department leads. Tech audit of current systems and software. Workflow mapping across storefronts, catering, food trucks, and corporate.</div>
+          <div class="timeline-deliverable">📄 Executive Report + Organization Assessment</div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-week">Weeks 3-4: Foundation</div>
+          <div class="timeline-title">Train, Govern, Align</div>
+          <div class="timeline-desc">Foundational AI training tailored to each team member's comfort level. AI governance policy creation. Identification of AI ambassadors within the Rocklands team. Communication strategy for internal and external stakeholders.</div>
+          <div class="timeline-deliverable">📄 AI Governance Framework + Training Materials</div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-week">Weeks 5-8: Build</div>
+          <div class="timeline-title">Proof of Concept</div>
+          <div class="timeline-desc">Build the highest-impact automation identified in discovery. Connect existing systems through APIs. Test with a real workflow and real team members. Iterate based on feedback before full deployment.</div>
+          <div class="timeline-deliverable">📄 Working Proof of Concept + Performance Metrics</div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-week">Weeks 9-12: Scale</div>
+          <div class="timeline-title">Deploy, Monitor, Optimize</div>
+          <div class="timeline-desc">Roll out across departments. Train-the-trainer sessions for AI ambassadors. Leadership dashboard deployment. Ongoing monitoring and optimization. Handoff documentation so your team owns the system.</div>
+          <div class="timeline-deliverable">📄 Leadership Dashboard + Handoff Documentation</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- PRICING -->
+  <section class="section pricing-section animate-in">
+    <div class="section-label">Investment</div>
+    <h2 class="section-title">Start With Discovery</h2>
+    <p class="section-desc" style="margin-left:auto; margin-right:auto;">The discovery phase gives both sides clarity before any larger commitment. No assumptions. No rubber stamping. Just a clear diagnosis of where AI creates the most value for Rocklands.</p>
+
+    <div class="card pricing-card">
+      <div class="pricing-header">
+        <div class="pricing-label">Discovery Phase</div>
+        <div class="pricing-title">2-Week AI Readiness Sprint</div>
+      </div>
+
+      <div class="pricing-amount">$5,000</div>
+      <div class="pricing-note">For engagements that begin by March 15, 2026</div>
+
+      <div class="pricing-urgency">Early-action rate. Aligns with your slow season window.</div>
+
+      <div class="pricing-regular">Standard discovery investment: <span>$7,500</span></div>
+
+      <div class="pricing-includes">
+        <h4>What's Included</h4>
+        <div class="pricing-item">
+          <div class="pricing-check">✓</div>
+          <div>Company-wide AI Readiness Survey customized with Rocklands branding</div>
+        </div>
+        <div class="pricing-item">
+          <div class="pricing-check">✓</div>
+          <div>One-on-one sessions with owner and department leads</div>
+        </div>
+        <div class="pricing-item">
+          <div class="pricing-check">✓</div>
+          <div>Complete technology audit and software ecosystem map</div>
+        </div>
+        <div class="pricing-item">
+          <div class="pricing-check">✓</div>
+          <div>Workflow analysis across all business units (stores, catering, food trucks, corporate)</div>
+        </div>
+        <div class="pricing-item">
+          <div class="pricing-check">✓</div>
+          <div>Executive AI Readiness Report with prioritized recommendations</div>
+        </div>
+        <div class="pricing-item">
+          <div class="pricing-check">✓</div>
+          <div>Personalized roadmap with implementation timeline and projected ROI</div>
+        </div>
+        <div class="pricing-item">
+          <div class="pricing-check">✓</div>
+          <div>Industry benchmarking: Rocklands vs. restaurant/catering AI adoption trends</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ABOUT OPTIMANOVA -->
+  <section class="section animate-in">
+    <div class="section-label">Who We Are</div>
+    <h2 class="section-title">About OptimaNova AI</h2>
+
+    <div class="card about-card" style="margin-top: 24px;">
+      <div class="about-text">
+        <h3>AI That Puts Humans First</h3>
+        <p>OptimaNova AI is a Washington, D.C.-based consulting firm that helps mission-driven organizations and growing businesses unlock AI without losing what makes them special.</p>
+        <p>Founded by Joe Paul, former CEO of Byte Back (where he raised $5 million to close the digital divide) and Wharton-certified in digital leadership, OptimaNova bridges the gap between Fortune 500 AI capability and small business reality.</p>
+        <p>Recognized by Washington Business Journal as one of 11 startups to watch.</p>
+        <div class="about-clients">
+          <span class="client-tag">Metro Washington COG</span>
+          <span class="client-tag">Greater Washington Community Foundation</span>
+          <span class="client-tag">Academy of Hope</span>
+          <span class="client-tag">Manna DC</span>
+          <span class="client-tag">The Brand Guild</span>
+        </div>
+      </div>
+      <div class="about-highlights">
+        <div class="highlight-item">
+          <div class="highlight-num">3</div>
+          <div class="highlight-text"><strong>Years in Business</strong>Serving local governments, foundations, and growing enterprises across the DMV.</div>
+        </div>
+        <div class="highlight-item">
+          <div class="highlight-num">90%</div>
+          <div class="highlight-text"><strong>Survey Completion Rate</strong>Our AI readiness surveys are designed for 5-minute completion. Teams actually finish them.</div>
+        </div>
+        <div class="highlight-item">
+          <div class="highlight-num">7.5→0.25</div>
+          <div class="highlight-text"><strong>Hours Saved Per Workflow</strong>Our internal proposal system went from 7.5 hours to 15 minutes per client. We build what we live.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- CTA -->
+  <section class="cta-section animate-in">
+    <h2 class="cta-title">Ready to Get Started?</h2>
+    <p class="cta-desc">Let's schedule a 30-minute discovery kickoff to align on scope, timing, and next steps before the busy season hits.</p>
+    <a href="https://calendly.com/joepaul-optimanova/30min" class="cta-button" target="_blank">Schedule Discovery Call</a>
+    <p class="cta-sub">30 minutes with Joe Paul, Founder &amp; CEO &nbsp;|&nbsp; No obligation</p>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>Prepared exclusively for Rocklands by <a href="https://optimanova.ai" target="_blank">OptimaNova AI</a></p>
+    <p style="margin-top: 8px;">Questions? Contact Joe Paul at <a href="mailto:joepaul@optimanova.ai">joepaul@optimanova.ai</a></p>
+  </footer>
+
+</div>
+
+<script>
+// Scroll-triggered animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.animate-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
