@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Prompt Library | COG Transportation Planning Board</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #1B2A4A;
+  --accent: #2E75B6;
+  --accent-light: #4A90D9;
+  --liminal-green: #00C48C;
+  --bg: #F7F9FC;
+  --card-bg: #FFFFFF;
+  --text: #2D3748;
+  --text-light: #718096;
+  --border: #E2E8F0;
+  --code-bg: #F1F5F9;
+  --tag-bg: #EDF2F8;
+  --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-lg: 0 4px 16px rgba(0,0,0,0.08);
+  --radius: 10px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* HEADER */
+.header {
+  background: linear-gradient(135deg, var(--navy) 0%, #2A3F6A 100%);
+  padding: 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+}
+
+.header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 40px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-logos {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.95);
+  letter-spacing: 0.3px;
+}
+
+.brand-x {
+  color: rgba(255,255,255,0.4);
+  font-weight: 400;
+  margin: 0 4px;
+}
+
+.brand-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.brand-dot.on { background: var(--accent-light); }
+.brand-dot.lim { background: var(--liminal-green); }
+
+.header-meta {
+  font-size: 12px;
+  color: rgba(255,255,255,0.5);
+  text-align: right;
+  line-height: 1.5;
+}
+
+.header-content {
+  padding: 28px 40px 24px;
+}
+
+.header h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 4px;
+  letter-spacing: -0.5px;
+}
+
+.header .subtitle {
+  font-size: 15px;
+  color: rgba(255,255,255,0.6);
+  font-weight: 400;
+}
+
+/* NAV */
+.nav {
+  display: flex;
+  gap: 2px;
+  padding: 0 40px;
+  padding-bottom: 0;
+}
+
+.nav-btn {
+  padding: 10px 18px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.55);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px 8px 0 0;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.nav-btn:hover {
+  color: rgba(255,255,255,0.85);
+  background: rgba(255,255,255,0.06);
+}
+
+.nav-btn.active {
+  color: var(--navy);
+  background: var(--bg);
+  font-weight: 600;
+}
+
+/* MAIN */
+.main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 32px 40px 80px;
+}
+
+.section-intro {
+  font-size: 15px;
+  color: var(--text-light);
+  margin-bottom: 24px;
+  max-width: 700px;
+}
+
+.section { display: none; }
+.section.active { display: block; }
+
+/* PROMPT CARDS */
+.prompt-card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 20px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  transition: box-shadow 0.2s;
+}
+
+.prompt-card:hover {
+  box-shadow: var(--shadow-lg);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.card-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--navy);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.card-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+
+.card-icon.write { background: #EBF5FF; color: var(--accent); }
+.card-icon.code { background: #F0FFF4; color: #38A169; }
+.card-icon.data { background: #FFF5F5; color: #E53E3E; }
+.card-icon.present { background: #FFFFF0; color: #D69E2E; }
+.card-icon.foundation { background: #F5F0FF; color: #805AD5; }
+
+.card-chevron {
+  font-size: 18px;
+  color: var(--text-light);
+  transition: transform 0.2s;
+  flex-shrink: 0;
+}
+
+.prompt-card.open .card-chevron {
+  transform: rotate(180deg);
+}
+
+.card-body {
+  display: none;
+  padding: 0 20px 20px;
+}
+
+.prompt-card.open .card-body {
+  display: block;
+}
+
+.prompt-block {
+  background: var(--code-bg);
+  border-radius: 8px;
+  padding: 16px 18px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  line-height: 1.7;
+  color: #4A5568;
+  margin-bottom: 14px;
+  position: relative;
+  border: 1px solid #E2E8F0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.copy-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.copy-btn:hover {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+
+.copy-btn.copied {
+  background: #38A169;
+  color: white;
+  border-color: #38A169;
+}
+
+.tip {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  font-size: 13px;
+  color: var(--text-light);
+  line-height: 1.6;
+}
+
+.tip-icon {
+  font-size: 14px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* BEST PRACTICES */
+.practice-item {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  padding: 20px 24px;
+  margin-bottom: 14px;
+}
+
+.practice-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 6px;
+}
+
+.practice-desc {
+  font-size: 14px;
+  color: var(--text-light);
+  line-height: 1.6;
+}
+
+/* DEADLINES */
+.deadlines {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.deadline-card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  padding: 20px;
+  text-align: center;
+}
+
+.deadline-date {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--navy);
+}
+
+.deadline-month {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.deadline-label {
+  font-size: 13px;
+  color: var(--text-light);
+  line-height: 1.4;
+}
+
+/* FOOTER */
+.footer {
+  text-align: center;
+  padding: 32px 40px;
+  font-size: 12px;
+  color: var(--text-light);
+  border-top: 1px solid var(--border);
+  margin-top: 40px;
+}
+
+.footer a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+@media (max-width: 768px) {
+  .header-top, .header-content, .nav, .main { padding-left: 20px; padding-right: 20px; }
+  .nav { overflow-x: auto; }
+  .deadlines { grid-template-columns: 1fr; }
+  .header h1 { font-size: 22px; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-top">
+    <div class="brand">
+      <div class="brand-logos">
+        <span class="brand-dot on"></span> OptimaNova AI
+        <span class="brand-x">x</span>
+        <span class="brand-dot lim"></span> Liminal
+      </div>
+    </div>
+    <div class="header-meta">
+      Prepared Feb 26, 2026<br>For: Ian Newman, COG
+    </div>
+  </div>
+  <div class="header-content">
+    <h1>AI Prompt Library</h1>
+    <div class="subtitle">Transportation Planning Board | Council of Governments</div>
+  </div>
+  <div class="nav" id="nav">
+    <button class="nav-btn active" data-section="overview">Overview</button>
+    <button class="nav-btn" data-section="foundation">Foundation</button>
+    <button class="nav-btn" data-section="writing">Technical Writing</button>
+    <button class="nav-btn" data-section="data">Data & Analytics</button>
+    <button class="nav-btn" data-section="python">Python</button>
+    <button class="nav-btn" data-section="presentations">Presentations</button>
+    <button class="nav-btn" data-section="practices">Best Practices</button>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- OVERVIEW -->
+  <div class="section active" id="overview">
+    <p class="section-intro">This prompt library is built for your specific workflows in congestion management, technical report writing, data analysis, and Python development. Each prompt is ready to copy and use. Click any card to expand it.</p>
+
+    <div class="deadlines">
+      <div class="deadline-card">
+        <div class="deadline-month">March</div>
+        <div class="deadline-date">5</div>
+        <div class="deadline-label">RITIS User Group<br>Meeting</div>
+      </div>
+      <div class="deadline-card" style="border-color: var(--accent); border-width: 2px;">
+        <div class="deadline-month" style="color: var(--accent);">March</div>
+        <div class="deadline-date" style="color: var(--accent);">26</div>
+        <div class="deadline-label"><strong>Mobility Analytics<br>Subcommittee</strong></div>
+      </div>
+      <div class="deadline-card">
+        <div class="deadline-month">April</div>
+        <div class="deadline-date">5</div>
+        <div class="deadline-label">General Audience<br>Presentation</div>
+      </div>
+    </div>
+
+    <h3 style="font-size: 16px; color: var(--navy); margin-bottom: 16px;">Use Cases Identified</h3>
+
+    <div class="practice-item">
+      <div class="practice-title">1. Technical Report Writing</div>
+      <div class="practice-desc">Drafting sections calibrated for mixed audiences with your 10 congestion metrics, RITIS/NPM RDS definitions, and federal CMP compliance requirements as context.</div>
+    </div>
+    <div class="practice-item">
+      <div class="practice-title">2. Python Code Review</div>
+      <div class="practice-desc">Scoped, targeted code assistance that fixes the specific line without rewriting your entire script.</div>
+    </div>
+    <div class="practice-item">
+      <div class="practice-title">3. Data Interpretation & Translation</div>
+      <div class="practice-desc">Converting summary statistics into narrative discussion sections accessible to non-planners.</div>
+    </div>
+    <div class="practice-item">
+      <div class="practice-title">4. Presentation Audience Adaptation</div>
+      <div class="practice-desc">Flipping content between technical and general audiences for different stakeholder groups.</div>
+    </div>
+  </div>
+
+  <!-- FOUNDATION -->
+  <div class="section" id="foundation">
+    <p class="section-intro">Use these at the start of any new AI session to establish the right working relationship. These set the tone for everything that follows.</p>
+
+    <div class="prompt-card">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-title"><div class="card-icon foundation">&#9670;</div> Session Setup: Critical Thought Partner</div>
+        <div class="card-chevron">&#9662;</div>
+      </div>
+      <div class="card-body">
+        <div class="prompt-block">You are a senior technical advisor helping me develop transportation planning deliverables for the Metropolitan Washington Council of Governments. Your audience expertise spans first-year civil engineering students to 30-year FHWA/FTA executives. Your job is to be an objective, critical thought partner. Do not agree with me by default. If my framing is too technical, flag it. If my logic has a gap, call it out. If there is a better approach, tell me directly. Ask clarifying questions before beginning any task.<button class="copy-btn" onclick="copyPrompt(this, event)">Copy</button></div>
+        <div class="tip"><span class="tip-icon">&#128161;</span> Paste this at the start of any major work session. It sets expectations for the entire conversation.</div>
+      </div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-title"><div class="card-icon foundation">&#9670;</div> Context Loader: CMP Technical Report</div>
+        <div class="card-chevron">&#9662;</div>
+      </div>
+      <div class="card-body">
+        <div class="prompt-block">I am the Program Manager for the Transportation Planning Board's Congestion Management Process. I am building a technical report as an ArcGIS Story Map with interactive web maps and Power BI dashboards. The report covers 10 core congestion metrics, uses data from the RITIS Probe Data Analytics Suite and NPM RDS Analytics Suite, and must comply with federal CMP requirements from both FHWA and FTA. My audiences include: TPB subcommittee members, senior MPO leadership, federal agency executives, consulting firms with 30+ years of experience, and people encountering congestion data for the first time. All writing must be accessible without being condescending.<button class="copy-btn" onclick="copyPrompt(this, event)">Copy</button></div>
+        <div class="tip"><span class="tip-icon">&#128161;</span> Load this context so the AI understands your program without you re-explaining it every time.</div>
+      </div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-title"><div class="card-icon foundation">&#9670;</div> The Clarifying Questions Hack</div>
+        <div class="card-chevron">&#9662;</div>
+      </div>
+      <div class="card-body">
+        <div class="prompt-block">Ask any clarifying questions you have before beginning this task.<button class="copy-btn" onclick="copyPrompt(this, event)">Copy</button></div>
+        <div class="tip"><span class="tip-icon">&#128161;</span> Add this to the end of every single prompt. The AI will ask you things you didn't think to include, filling gaps automatically. This one line transforms every interaction.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TECHNICAL WRITING -->
+  <div class="section" id="writing">
+    <p class="section-intro">These prompts address your core workflow: writing technical content that serves multiple audience levels simultaneously.</p>
+
+    <div class="prompt-card">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-title"><div class="card-icon write">&#9998;</div> Audience Calibration: Mixed Readership</div>
+        <div class="card-chevron">&#9662;</div>
+      </div>
+      <div class="card-body">
+        <div class="prompt-block">I need to write a section about [METRIC NAME]. Draft two versions: (1) A technical version appropriate for senior FHWA/FTA officials and experienced transportation consultants. (2) An accessible version appropriate for someone encountering this concept for the first time. Then write a final merged version that serves both audiences without condescending to either. The merged version should lead with clarity, layer in technical precision, and define specialized terms naturally within the text. Ask any clarifying questions before beginning this task.<button class="copy-btn" onclick="copyPrompt(this, event)">Copy</button></div>
+        <div class="tip"><span class="tip-icon">&#128161;</span> Replace [METRIC NAME] with any of your 10 core metrics. This gives you three options to work from.</div>
+      </div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-title"><div class="card-icon write">&#9998;</div> Jargon Translator</div>
+        <div class="card-chevron">&#9662;</div>
+      </div>
+      <div class="card-body">
+        <div class="prompt-block">I need to explain [TECHNICAL CONCEPT] in my CMP technical report. The audience ranges from first-year civil engineering students to senior executives at FHWA. Translate this concept into plain language that is accurate, accessible, and not patronizing. Include a one-sentence definition, followed by a real-world analogy that makes the concept intuitive. Ask any clarifying questions before beginning this task.<button class="copy-btn" onclick="copyPrompt(this, event)">Copy</button></div>
+        <div class="tip"><span class="tip-icon">&#128161;</span> Use this whenever you catch yourself writing something that even you find confusing.</div>
+      </div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-title"><div class="card-icon write">&#9998;</div> Data Interpretation to Narrative</div>
+        <div class="card-chevron">&#9662;</div>
+      </div>
+      <div class="card-body">
+        <div class="prompt-block">Here are my summary statistics for [METRIC NAME]: Mean: [X], Median: [Y], Std Dev: [Z]. The median is [higher/lower] than the mean, indicating [skew direction]. Write a 2-3 paragraph discussion section that: (1) Explains what these statistics mean in practical transportation terms. (2) Highlights why the difference between mean and median matters for this metric. (3) Frames the finding in language accessible to a non-planner while remaining technically accurate. (4) Suggests what this means for congestion in the TPB region specifically. Ask any clarifying questions before beginning this task.<button class="copy-btn" onclick="copyPrompt(this, event)">Copy</button></div>
+        <div class="tip"><span class="tip-icon">&#128161;</span> Feed in your actual numbers. This is the "stats to story" converter.</div>
+      </div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-title"><div class="card-icon write">&#9998;</div> Federal Compliance Language Check</div>
+        <div class="card-chevron">&#9662;</div>
+      </div>
+      <div class="card-body">
+        <div class="prompt-block">Review the following section of my CMP technical report for compliance with federal congestion management process requirements under both FHWA and FTA guidelines. Flag any statements that could be inaccurate, incomplete, or misaligned with current federal CMP regulations. Suggest specific language corrections where needed. [PASTE SECTION]. Ask any clarifying questions before beginning this task.<button class="copy-btn" onclick="copyPrompt(this, event)">Copy</button></div>
+        <div class="tip"><span class="tip-icon">&#128161;</span> Run this on any section that references federal obligations before finalizing.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DATA & ANALYTICS -->
+  <div class="section" id="data">
+    <p class="section-intro">Prompts for the data pipeline: tool selection, parameter validation, and analysis.</p>
+
+    <div class="prompt-card">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-title"><div class="card-icon data">&#9632;</div> RITIS Tool Selector</div>
+        <div class="card-chevron">&#9662;</div>
+      </div>
+      <div class="card-body">
+        <div class="prompt-block">I am working on my CMP technical report and need to analyze [DESCRIBE WHAT YOU NEED]. I have access to the RITIS Probe Data Analytics Suite and the NPM RDS Analytics Suite. Which specific tool should I use, and why? What parameters should I set? If there is a better approach using a different tool in either suite, recommend it and explain the tradeoff. Ask any clarifying questions before beginning this task.<button class="copy-btn" onclick="copyPrompt(this, event)">Copy</button></div>
+        <div class="tip"><span class="tip-icon">&#128161;</span> This replaces the back-and-forth guessing. Let the AI recommend based on your goal.</div>
+      </div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-title"><div class="card-icon data">&#9632;</div> Parameter Validation</div>
+        <div class="card-chevron">&#9662;</div>
+      </div>
+      <div class="card-body">
+        <div class="prompt-block">I am about to download data from [TOOL NAME] with the following parameters: [LIST YOUR PARAMETERS]. My goal is to analyze [DESCRIBE OBJECTIVE] for the TPB region. Review these parameters and tell me: (1) Are they correct for my objective? (2) Should any parameter be changed? If so, which one and why? (3) Are there any parameters I am missing that would improve my analysis? Do not agree with my choices by default. If something should be changed, say so directly. Ask any clarifying questions before beginning this task.<button class="copy-btn" onclick="copyPrompt(this, event)">Copy</button></div>
+        <div class="tip"><span class="tip-icon">&#128161;</span> The last line prevents the AI from rubber-stamping your settings.</div>
+      </div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-title"><div class="card-icon data">&#9632;</div> Data Quality Check</div>
+        <div class="card-chevron">&#9662;</div>
+      </div>
+      <div class="card-body">
+        <div class="prompt-block">I have formatted my data for [METRIC NAME]. Before I proceed to analysis, review the following sample and flag any issues with formatting, missing values, outliers, or inconsistencies that could affect my results. [PASTE DATA SAMPLE OR DESCRIBE FORMAT]. Ask any clarifying questions before beginning this task.<button class="copy-btn" onclick="copyPrompt(this, event)">Copy</button></div>
+        <div class="tip"><span class="tip-icon">&#128161;</span> Run this before analysis. Cheaper to fix issues now than after building visualizations.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PYTHON -->
+  <div class="section" id="python">
+    <p class="section-intro">These prompts solve the "script rewriting" problem by constraining the AI to targeted, minimal edits.</p>
+
+    <div class="prompt-card">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-title"><div class="card-icon code">&#10095;</div> Single Line Fix (No Rewrite)</div>
+        <div class="card-chevron">&#9662;</div>
+      </div>
+      <div class="card-body">
+        <div class="prompt-block">I have a Python script that is working correctly except for one issue on line [LINE NUMBER]. The issue is: [DESCRIBE THE PROBLEM]. Here is the relevant code block: [PASTE 5-10 LINES AROUND THE ISSUE]. Give me ONLY the replacement line. Do not rewrite the full script. Do not add new functions or restructure the code. Just tell me what line [LINE NUMBER] should say instead.<button class="copy-btn" onclick="copyPrompt(this, event)">Copy</button></div>
+        <div class="tip"><span class="tip-icon">&#128161;</span> This is the guardrail you needed. "Do not rewrite the full script" prevents the AI from going rogue.</div>
+      </div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-title"><div class="card-icon code">&#10095;</div> Code Review (Not Rewrite)</div>
+        <div class="card-chevron">&#9662;</div>
+      </div>
+      <div class="card-body">
+        <div class="prompt-block">Review the following Python script for bugs, inefficiencies, or improvements. Do not rewrite the script. Instead, provide a numbered list of specific issues with: (1) The line number. (2) What the issue is. (3) The exact fix for that line only. If the script is clean, say so. Do not suggest stylistic changes unless they affect functionality. [PASTE SCRIPT]<button class="copy-btn" onclick="copyPrompt(this, event)">Copy</button></div>
+        <div class="tip"><span class="tip-icon">&#128161;</span> Code review without the AI taking over your codebase.</div>
+      </div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-title"><div class="card-icon code">&#10095;</div> R to Python Translation</div>
+        <div class="card-chevron">&#9662;</div>
+      </div>
+      <div class="card-body">
+        <div class="prompt-block">I have the following R script that I need to convert to Python. Translate it line by line, preserving the logic and structure. Use pandas for data manipulation and matplotlib/seaborn for visualization where applicable. Add comments explaining any differences between the R and Python approaches. [PASTE R CODE]. Ask any clarifying questions before beginning this task.<button class="copy-btn" onclick="copyPrompt(this, event)">Copy</button></div>
+        <div class="tip"><span class="tip-icon">&#128161;</span> Learn the Python equivalents of what you already know in R.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRESENTATIONS -->
+  <div class="section" id="presentations">
+    <p class="section-intro">Prompts for your upcoming deadlines: March 5, March 26, and April 5.</p>
+
+    <div class="prompt-card">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-title"><div class="card-icon present">&#9654;</div> Audience Flip</div>
+        <div class="card-chevron">&#9662;</div>
+      </div>
+      <div class="card-body">
+        <div class="prompt-block">I have a technical presentation prepared for [AUDIENCE A: e.g., Mobility Analytics Subcommittee members who are transportation planners and engineers]. I now need to adapt it for [AUDIENCE B: e.g., a general audience with no transportation planning background]. Identify which slides/sections need to change, what jargon needs to be replaced, and what context needs to be added for the new audience. Do not water down the substance. Maintain the core message while adjusting the framing and vocabulary. Ask any clarifying questions before beginning this task.<button class="copy-btn" onclick="copyPrompt(this, event)">Copy</button></div>
+        <div class="tip"><span class="tip-icon">&#128161;</span> Built for your April 5 deadline where you need a completely different presentation for a different audience.</div>
+      </div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-title"><div class="card-icon present">&#9654;</div> Presentation Outline Generator</div>
+        <div class="card-chevron">&#9662;</div>
+      </div>
+      <div class="card-body">
+        <div class="prompt-block">I am presenting on [TOPIC] to [AUDIENCE] on [DATE]. The presentation should be [LENGTH] minutes. My key objectives are: (1) [OBJECTIVE 1] (2) [OBJECTIVE 2] (3) [OBJECTIVE 3]. Generate an outline with: suggested slide titles, 2-3 key points per slide, recommended data visualizations to include, and one audience engagement moment. Flag any areas where I might lose a non-technical audience. Ask any clarifying questions before beginning this task.<button class="copy-btn" onclick="copyPrompt(this, event)">Copy</button></div>
+        <div class="tip"><span class="tip-icon">&#128161;</span> Use this to scaffold your presentations before building them out.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BEST PRACTICES -->
+  <div class="section" id="practices">
+    <p class="section-intro">Core principles that improve every AI interaction, regardless of which tool you use.</p>
+
+    <div class="practice-item">
+      <div class="practice-title">Be specific.</div>
+      <div class="practice-desc">The more detail you provide, the better the output. Include your audience, format, length, tone, and constraints. Think of it like onboarding a new team member: they need the details to do good work.</div>
+    </div>
+    <div class="practice-item">
+      <div class="practice-title">Always end with "Ask any clarifying questions before beginning this task."</div>
+      <div class="practice-desc">This one habit will improve every single interaction. The AI fills in the gaps you didn't know you had.</div>
+    </div>
+    <div class="practice-item">
+      <div class="practice-title">Show it what an A+ looks like.</div>
+      <div class="practice-desc">Paste an example of a finished report, a well-written section, or a clean script. Say: "This is the standard. Everything you produce should mirror this quality and format."</div>
+    </div>
+    <div class="practice-item">
+      <div class="practice-title">Set the role up front.</div>
+      <div class="practice-desc">Tell the AI who it is: "You are a senior transportation planning advisor." This frames every response for the rest of the session.</div>
+    </div>
+    <div class="practice-item">
+      <div class="practice-title">Ask: "What do you need from me to do this well?"</div>
+      <div class="practice-desc">Flip the relationship. Let the AI tell you what context it is missing. You will be surprised what it asks for.</div>
+    </div>
+    <div class="practice-item">
+      <div class="practice-title">Do not settle for the first output.</div>
+      <div class="practice-desc">Iterate. Say: "This is close but too technical in paragraph 2. Simplify without losing accuracy." Treat it like a draft review with a colleague.</div>
+    </div>
+    <div class="practice-item">
+      <div class="practice-title">Constrain the output.</div>
+      <div class="practice-desc">Say: "Do not exceed 3 paragraphs. Use no more than 2 bullet points. Keep it under 200 words." Constraints produce better writing.</div>
+    </div>
+    <div class="practice-item">
+      <div class="practice-title">Shift from doer to reviewer.</div>
+      <div class="practice-desc">Let AI take the first pass. Your job is to review, refine, and approve. Execution is deferred. Judgment stays with you.</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <strong>OptimaNova AI</strong> x <strong>Liminal</strong><br>
+  <a href="mailto:joepaul@optimanova.ai">joepaul@optimanova.ai</a> &nbsp;|&nbsp; <a href="https://www.optimanova.ai">www.optimanova.ai</a> &nbsp;|&nbsp; (202) 553-7718
+</div>
+
+<script>
+// Nav
+document.querySelectorAll('.nav-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.section).classList.add('active');
+  });
+});
+
+// Accordion
+function toggleCard(header) {
+  header.closest('.prompt-card').classList.toggle('open');
+}
+
+// Copy
+function copyPrompt(btn, e) {
+  e.stopPropagation();
+  const block = btn.closest('.prompt-block');
+  const text = block.childNodes[0].textContent.trim();
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+</script>
+</body>
+</html>
