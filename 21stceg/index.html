@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Event Intelligence | 21st Century Expo Group, Powered by OptimaNova AI</title>
+<style>
+  :root{
+    --navy:#0f1629;
+    --navy-raised:#1a2332;
+    --purple:#7c3aed;
+    --magenta:#c026d3;
+    --blue:#3b82f6;
+    --emerald:#10b981;
+    --amber:#f59e0b;
+    --text:#f1f5f9;
+    --text2:#94a3b8;
+    --border:#2d3a52;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    background:var(--navy);
+    color:var(--text);
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:0 20px 48px;}
+
+  /* Header band */
+  header{border-bottom:1px solid var(--border);padding:22px 0 20px;}
+  .head-row{display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+  .head-row img{height:44px;width:auto;display:block;}
+  .head-title h1{font-size:1.35rem;font-weight:700;letter-spacing:.2px;}
+  .head-title p{color:var(--text2);font-size:.82rem;margin-top:2px;}
+  .sample-chip{
+    margin-left:auto;
+    border:1px solid var(--amber);
+    color:var(--amber);
+    font-size:.7rem;
+    font-weight:700;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    padding:5px 10px;
+    border-radius:999px;
+    white-space:nowrap;
+  }
+
+  /* Search context strip */
+  .search-strip{
+    margin-top:22px;
+    background:var(--navy-raised);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:12px 18px;
+    display:flex;
+    align-items:center;
+    gap:14px;
+    flex-wrap:wrap;
+    font-size:.85rem;
+  }
+  .search-strip .lbl{color:var(--purple);font-weight:700;text-transform:uppercase;font-size:.68rem;letter-spacing:.08em;}
+  .search-strip .q{color:var(--text);}
+  .search-strip .count{margin-left:auto;color:var(--text2);}
+  .search-strip .count b{color:var(--text);}
+
+  /* Headline */
+  .headline{
+    margin:30px 0 6px;
+    font-size:1.45rem;
+    font-weight:700;
+    line-height:1.35;
+    max-width:56ch;
+  }
+  .headline .hl{color:var(--purple);}
+  .legend{margin:12px 0 26px;display:flex;gap:18px;flex-wrap:wrap;font-size:.78rem;color:var(--text2);}
+  .legend .chip{display:inline-flex;align-items:center;gap:7px;}
+  .dot{width:9px;height:9px;border-radius:50%;display:inline-block;}
+  .dot.v{background:var(--blue);}
+  .dot.m{background:var(--amber);}
+
+  /* Tag chips reused on cards */
+  .tag{
+    display:inline-block;
+    font-size:.64rem;
+    font-weight:700;
+    letter-spacing:.05em;
+    text-transform:uppercase;
+    padding:3px 8px;
+    border-radius:999px;
+    border:1px solid var(--border);
+    color:var(--text2);
+  }
+  .tag.verified{border-color:var(--blue);color:var(--blue);}
+  .tag.modeled{border-color:var(--amber);color:var(--amber);}
+
+  /* Hero: identity + score */
+  .hero{display:grid;grid-template-columns:1.7fr 1fr;gap:18px;}
+  .card{
+    background:var(--navy-raised);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:22px;
+  }
+  .badges{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;}
+  .badge{
+    font-size:.7rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+    padding:4px 10px;border-radius:999px;
+  }
+  .badge.class{background:rgba(124,58,237,.16);color:#b794f6;border:1px solid var(--purple);}
+  .badge.freq,.badge.reach{background:transparent;color:var(--text2);border:1px solid var(--border);}
+  .event-name{font-size:1.5rem;font-weight:800;line-height:1.25;margin-bottom:6px;}
+  .event-desc{color:var(--text2);font-size:.9rem;max-width:60ch;margin-bottom:18px;}
+  .detail-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px 18px;}
+  .detail label{display:block;font-size:.66rem;text-transform:uppercase;letter-spacing:.07em;color:var(--text2);margin-bottom:2px;}
+  .detail span{font-size:.9rem;color:var(--text);font-weight:600;}
+
+  .score-card{display:flex;flex-direction:column;align-items:center;text-align:center;}
+  .score-card h3{font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text2);margin-bottom:12px;}
+  .ring{position:relative;width:150px;height:150px;margin-bottom:10px;}
+  .ring svg{transform:rotate(-90deg);}
+  .ring .num{
+    position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  }
+  .ring .num b{font-size:2.6rem;font-weight:800;line-height:1;}
+  .ring .num small{color:var(--text2);font-size:.7rem;}
+  .drivers{width:100%;margin-top:14px;text-align:left;}
+  .driver{margin-bottom:9px;}
+  .driver .row{display:flex;justify-content:space-between;font-size:.74rem;color:var(--text2);margin-bottom:3px;}
+  .driver .row b{color:var(--text);font-weight:600;}
+  .bar-track{height:6px;background:var(--navy);border-radius:999px;overflow:hidden;border:1px solid var(--border);}
+  .bar-fill{height:100%;background:var(--purple);border-radius:999px;width:0;}
+  .score-note{margin-top:12px;font-size:.7rem;color:var(--text2);max-width:26ch;}
+
+  /* KPI row */
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:18px;}
+  .kpi{background:var(--navy-raised);border:1px solid var(--border);border-radius:14px;padding:18px 20px;}
+  .kpi .top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;}
+  .kpi label{font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;color:var(--text2);}
+  .kpi .big{font-size:2rem;font-weight:800;margin:8px 0 4px;line-height:1.1;}
+  .kpi .big.yes{color:var(--emerald);}
+  .kpi .ctx{font-size:.78rem;color:var(--text2);}
+
+  /* Demographics */
+  section.demo{margin-top:26px;}
+  .sec-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:14px;}
+  .sec-head h2{font-size:1.05rem;font-weight:700;}
+  .sec-head p{color:var(--text2);font-size:.8rem;}
+  .demo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  .demo .card h4{font-size:.72rem;text-transform:uppercase;letter-spacing:.09em;color:var(--text2);margin-bottom:14px;}
+  .stat-bar{margin-bottom:11px;}
+  .stat-bar .row{display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:4px;}
+  .stat-bar .row b{font-weight:700;}
+  .stat-bar .bar-fill{background:var(--blue);}
+  .house-stats{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .mini{background:var(--navy);border:1px solid var(--border);border-radius:10px;padding:12px 14px;}
+  .mini label{display:block;font-size:.64rem;text-transform:uppercase;letter-spacing:.07em;color:var(--text2);margin-bottom:4px;}
+  .mini b{font-size:1.25rem;font-weight:800;}
+  .mini.wide{grid-column:1 / -1;}
+  .own-note{margin-top:12px;font-size:.72rem;color:var(--text2);}
+
+  /* Spec checklist */
+  .spec{margin-top:28px;background:var(--navy-raised);border:1px solid var(--border);border-radius:14px;padding:18px 22px;}
+  .spec h2{font-size:.95rem;font-weight:700;margin-bottom:12px;}
+  .spec-row{display:flex;flex-wrap:wrap;gap:9px;}
+  .spec-chip{
+    display:inline-flex;align-items:center;gap:7px;
+    border:1px solid var(--border);border-radius:999px;
+    padding:6px 13px;font-size:.78rem;color:var(--text);
+  }
+  .spec-chip .ck{color:var(--emerald);font-weight:800;}
+  .spec .buckets{margin-top:13px;font-size:.78rem;color:var(--text2);}
+
+  footer{
+    margin-top:34px;border-top:1px solid var(--border);padding-top:16px;
+    color:var(--text2);font-size:.74rem;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  }
+
+  /* Responsive */
+  @media (max-width:900px){
+    .hero{grid-template-columns:1fr;}
+    .detail-grid{grid-template-columns:repeat(2,1fr);}
+    .demo-grid{grid-template-columns:1fr;}
+  }
+  @media (max-width:768px){
+    .kpis{grid-template-columns:repeat(2,1fr);}
+    .headline{font-size:1.2rem;}
+  }
+  @media (max-width:420px){
+    .detail-grid{grid-template-columns:1fr 1fr;}
+    .head-row img{height:36px;}
+  }
+
+  /* Print */
+  @media print{
+    body{background:#fff;color:#111;}
+    :root{--navy:#fff;--navy-raised:#fff;--text:#111;--text2:#555;--border:#ccc;}
+    .card,.kpi,.search-strip,.spec,.mini{background:#fff;border-color:#ccc;}
+    .sample-chip{color:#b45309;border-color:#b45309;}
+    header,.hero,.kpis{break-inside:avoid;}
+    .head-row img{filter:invert(1);}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="head-row">
+      <img src="https://dashboards.optimanova.ai/brand-assets/logo-white.png" alt="OptimaNova AI">
+      <div class="head-title">
+        <h1>Event Intelligence</h1>
+        <p>21st Century Expo Group &middot; Powered by OptimaNova AI &middot; Concept Preview, July 2026</p>
+      </div>
+      <span class="sample-chip">Concept &middot; Sample Data</span>
+    </div>
+  </header>
+
+  <div class="search-strip">
+    <span class="lbl">Search</span>
+    <span class="q" id="searchQuery"></span>
+    <span class="count">Found <b id="foundCount"></b> events &middot; Viewing profile <b id="viewingIndex"></b></span>
+  </div>
+
+  <p class="headline">Point Event Intelligence at an agent’s territory and every event comes back scored: <span class="hl">who attends, what access costs, and whether it deserves their time, their table, or a pass.</span></p>
+
+  <div class="legend">
+    <span class="chip"><span class="dot v"></span>Verified &middot; pulled directly from public sources</span>
+    <span class="chip"><span class="dot m"></span>Modeled &middot; estimated from venue, geography, and event-type data</span>
+  </div>
+
+  <div class="hero">
+    <div class="card">
+      <div class="badges">
+        <span class="badge class" id="classification"></span>
+        <span class="badge freq" id="frequency"></span>
+        <span class="badge reach" id="reach"></span>
+      </div>
+      <div class="event-name" id="eventName"></div>
+      <p class="event-desc" id="eventDesc"></p>
+      <div class="detail-grid">
+        <div class="detail"><label>Venue</label><span id="venue"></span></div>
+        <div class="detail"><label>Address</label><span id="address"></span></div>
+        <div class="detail"><label>Venue Type</label><span id="venueType"></span></div>
+        <div class="detail"><label>Dates</label><span id="dates"></span></div>
+        <div class="detail"><label>Duration</label><span id="duration"></span></div>
+        <div class="detail"><label>Organizer</label><span id="organizer"></span></div>
+        <div class="detail"><label>Website</label><span id="website"></span></div>
+        <div class="detail"><label>Years Running</label><span id="yearsRunning"></span></div>
+        <div class="detail"><label>Data Status</label><span class="tag verified">Verified</span></div>
+      </div>
+    </div>
+
+    <div class="card score-card">
+      <h3>Predictor Score</h3>
+      <div class="ring">
+        <svg width="150" height="150" viewBox="0 0 150 150">
+          <circle cx="75" cy="75" r="64" fill="none" stroke="#2d3a52" stroke-width="11"/>
+          <circle id="ringFill" cx="75" cy="75" r="64" fill="none" stroke="#7c3aed" stroke-width="11"
+                  stroke-linecap="round" stroke-dasharray="402" stroke-dashoffset="402"/>
+        </svg>
+        <div class="num"><b id="scoreNum"></b><small>of 100</small></div>
+      </div>
+      <div class="drivers" id="drivers"></div>
+      <p class="score-note">A match, not a grade: this same event scores 34 for a renters-focused agent. The weighting is yours to define.</p>
+    </div>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi">
+      <div class="top"><label>Est. Adult Attendance</label><span class="tag modeled">Modeled</span></div>
+      <div class="big" id="attendance"></div>
+      <div class="ctx">18+ across full event run</div>
+    </div>
+    <div class="kpi">
+      <div class="top"><label>Exhibition</label><span class="tag verified">Verified</span></div>
+      <div class="big yes" id="exhibition"></div>
+      <div class="ctx" id="exhibitionCtx"></div>
+    </div>
+    <div class="kpi">
+      <div class="top"><label>Sponsorships</label><span class="tag verified">Verified</span></div>
+      <div class="big yes" id="sponsorship"></div>
+      <div class="ctx" id="sponsorshipCtx"></div>
+    </div>
+    <div class="kpi">
+      <div class="top"><label>Reach</label><span class="tag modeled">Modeled</span></div>
+      <div class="big" id="reachKpi" style="font-size:1.45rem;padding-top:6px;"></div>
+      <div class="ctx" id="reachCtx"></div>
+    </div>
+  </div>
+
+  <section class="demo">
+    <div class="sec-head">
+      <h2>Attendee Demographics</h2>
+      <span class="tag modeled">Modeled Estimates</span>
+      <p>Calculated from venue trade area, regional census data, and event-type attendance patterns.</p>
+    </div>
+    <div class="demo-grid">
+      <div class="card">
+        <h4>Gender &amp; Age</h4>
+        <div id="genderAge"></div>
+      </div>
+      <div class="card">
+        <h4>Household Profile</h4>
+        <div class="house-stats">
+          <div class="mini wide"><label>Avg Household Income</label><b id="hhi"></b></div>
+          <div class="mini"><label>Homeowners</label><b id="homeowners"></b></div>
+          <div class="mini"><label>Renters</label><b id="renters"></b></div>
+          <div class="mini"><label>Boat / Watercraft Owners</label><b id="boat"></b></div>
+          <div class="mini"><label>Motorcycle Owners</label><b id="moto"></b></div>
+        </div>
+        <p class="own-note">Ownership signals matter here: they tell you which exhibitors this crowd is worth to.</p>
+      </div>
+      <div class="card">
+        <h4>Race / Ethnicity</h4>
+        <div id="race"></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="spec">
+    <h2>Mirrors your MVP spec, section for section</h2>
+    <div class="spec-row" id="specRow"></div>
+    <p class="buckets">Pre-Profile Report buckets, ready from day one: Boat &middot; Motorcycle &middot; Auto &middot; Renters &amp; Landlord</p>
+  </div>
+
+  <footer>
+    <span>Prepared by OptimaNova AI &middot; July 15, 2026</span>
+    <span>Concept preview built on illustrative sample data. Prepared exclusively for 21st Century Expo Group.</span>
+  </footer>
+
+</div>
+
+<script>
+// Illustrative sample data for concept preview, updated 2026-07-15.
+// Not real event figures. Field structure mirrors the 21st Century Expo Group
+// MVP spec for the Event Predictor Index (email of 2026-07-14), all 8 sections.
+const DATA = {
+  search: {
+    query: "Agent profile: Boat & Powersports lines \u00b7 25 mi of Upper Marlboro, MD 20772 \u00b7 Next 12 months",
+    found: 47,
+    viewing: "12 of 47"
+  },
+  event: {
+    name: "Chesapeake Bay Boat & Outdoor Expo",
+    classification: "Consumer Show",
+    frequency: "Annual \u00b7 12th Year",
+    yearsRunning: "12",
+    reach: "Local Region",
+    reachCtx: "Draws across DC, MD, VA",
+    venue: "The Show Place Arena",
+    address: "14900 Pennsylvania Ave, Upper Marlboro, MD 20772",
+    venueType: "Civic complex (arena)",
+    dates: "Oct 16 to 18, 2026",
+    duration: "3 days",
+    organizer: "Chesapeake Outdoor Events LLC",
+    website: "chesapeakeoutdoorexpo.com",
+    description: "Regional consumer show featuring 200+ exhibitors of boats, marine gear, RVs, and outdoor recreation equipment, with on-site demos, family programming, and a waterfront lifestyle pavilion."
+  },
+  score: {
+    value: 87,
+    drivers: [
+      { label: "Audience Fit", value: 92 },
+      { label: "Exhibition Access", value: 88 },
+      { label: "Track Record", value: 90 },
+      { label: "Reach", value: 74 }
+    ]
+  },
+  kpis: {
+    attendance: "8,400",
+    exhibitionCtx: "140 booth spaces, 10x10 standard",
+    sponsorshipCtx: "4 levels: Title, Gold, Silver, Community"
+  },
+  demographics: {
+    gender: [
+      { label: "Male", value: 58 },
+      { label: "Female", value: 39 },
+      { label: "Unknown", value: 3 }
+    ],
+    age: [
+      { label: "18 to 30", value: 21 },
+      { label: "31 to 65", value: 61 },
+      { label: "66+", value: 18 }
+    ],
+    hhi: "$98,400",
+    homeowners: "69%",
+    renters: "31%",
+    boat: "34%",
+    moto: "9%",
+    race: [
+      { label: "Black / African American", value: 48 },
+      { label: "White / Caucasian", value: 32 },
+      { label: "Hispanic", value: 12 },
+      { label: "Other Race / Ethnicity", value: 8 }
+    ]
+  },
+  spec: [
+    "Geographic Targeting", "Event Details", "Attendee Demographics", "Exhibition",
+    "Sponsorships", "Classification", "Frequency", "Reach"
+  ]
+};
+
+function set(id, text){ var el = document.getElementById(id); if (el) el.textContent = text; }
+
+function barRow(item, color){
+  return '<div class="stat-bar">'
+    + '<div class="row"><span>' + item.label + '</span><b>' + item.value + '%</b></div>'
+    + '<div class="bar-track"><div class="bar-fill" style="width:' + item.value + '%;'
+    + (color ? 'background:' + color + ';' : '') + '"></div></div>'
+    + '</div>';
+}
+
+(function render(){
+  // Search strip
+  set("searchQuery", DATA.search.query);
+  set("foundCount", DATA.search.found);
+  set("viewingIndex", DATA.search.viewing);
+
+  // Event identity
+  var e = DATA.event;
+  set("classification", e.classification);
+  set("frequency", e.frequency);
+  set("reach", e.reach + " Reach");
+  set("eventName", e.name);
+  set("eventDesc", e.description);
+  set("venue", e.venue);
+  set("address", e.address);
+  set("venueType", e.venueType);
+  set("dates", e.dates);
+  set("duration", e.duration);
+  set("organizer", e.organizer);
+  set("website", e.website);
+  set("yearsRunning", e.yearsRunning);
+
+  // Score ring: circumference = 2 * PI * 64 = 402
+  set("scoreNum", DATA.score.value);
+  var ring = document.getElementById("ringFill");
+  if (ring) ring.setAttribute("stroke-dashoffset", String(402 - (402 * DATA.score.value / 100)));
+
+  var dHtml = "";
+  DATA.score.drivers.forEach(function(d){
+    dHtml += '<div class="driver">'
+      + '<div class="row"><span>' + d.label + '</span><b>' + d.value + '</b></div>'
+      + '<div class="bar-track"><div class="bar-fill" style="width:' + d.value + '%"></div></div>'
+      + '</div>';
+  });
+  document.getElementById("drivers").innerHTML = dHtml;
+
+  // KPIs
+  set("attendance", DATA.kpis.attendance);
+  set("exhibition", "Yes");
+  set("exhibitionCtx", DATA.kpis.exhibitionCtx);
+  set("sponsorship", "Yes");
+  set("sponsorshipCtx", DATA.kpis.sponsorshipCtx);
+  set("reachKpi", e.reach);
+  set("reachCtx", e.reachCtx);
+
+  // Demographics
+  var ga = "";
+  DATA.demographics.gender.forEach(function(g){ ga += barRow(g); });
+  ga += '<div style="height:10px"></div>';
+  DATA.demographics.age.forEach(function(a){ ga += barRow(a, "#7c3aed"); });
+  document.getElementById("genderAge").innerHTML = ga;
+
+  set("hhi", DATA.demographics.hhi);
+  set("homeowners", DATA.demographics.homeowners);
+  set("renters", DATA.demographics.renters);
+  set("boat", DATA.demographics.boat);
+  set("moto", DATA.demographics.moto);
+
+  var raceHtml = "";
+  DATA.demographics.race.forEach(function(r){ raceHtml += barRow(r); });
+  document.getElementById("race").innerHTML = raceHtml;
+
+  // Spec checklist
+  var specHtml = "";
+  DATA.spec.forEach(function(s, i){
+    specHtml += '<span class="spec-chip"><span class="ck">&#10003;</span>' + (i + 1) + '. ' + s + '</span>';
+  });
+  document.getElementById("specRow").innerHTML = specHtml;
+})();
+</script>
+</body>
+</html>
