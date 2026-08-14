@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Phase One Proposal | DC Bar Foundation</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#000C65; --text:#1B2A4A; --blue:#2E75B6; --blue-lt:#009BFD;
+  --magenta:#CA25B7; --gray:#8A8A8A; --hair:#DCE6F1; --wash:#F7F9FE;
+  --serif:'Instrument Serif',Georgia,serif;
+  --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#fff;color:var(--text);font-family:var(--sans);font-weight:300;line-height:1.62;-webkit-font-smoothing:antialiased}
+
+/* top band */
+.band{background:#fff;border-bottom:0}
+.band-in{max-width:900px;margin:0 auto;padding:22px 44px 14px}
+.band-in img{height:104px;width:auto;display:block}
+.rule2{display:flex;height:3px;max-width:900px;margin:0 auto}
+.rule2 span:first-child{flex:1.7;background:var(--blue)}
+.rule2 span:last-child{flex:1;background:var(--magenta)}
+@media(max-width:680px){.band-in{padding:16px 20px 11px}.band-in img{height:70px}.rule2{margin:0 20px}}
+
+.page{max-width:900px;margin:0 auto;padding:0 44px 90px}
+@media(max-width:680px){.page{padding:0 20px 60px}}
+
+section{padding:52px 0 0}
+@media(max-width:680px){section{padding:40px 0 0}}
+.lab{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--blue);font-weight:600;
+  border-bottom:1px solid var(--hair);padding-bottom:8px;margin-bottom:22px}
+h1{font-family:var(--serif);font-weight:400;font-size:clamp(38px,6.4vw,60px);line-height:1.03;color:var(--navy);letter-spacing:-.01em;margin-bottom:16px}
+h2{font-family:var(--serif);font-weight:400;font-size:clamp(27px,4.2vw,38px);line-height:1.1;color:var(--navy);margin-bottom:14px;max-width:24ch}
+h3{font-size:16.5px;font-weight:600;color:var(--navy);margin-bottom:9px}
+p{font-size:16px;line-height:1.68;max-width:66ch;margin-bottom:15px}
+p strong{color:var(--navy);font-weight:600}
+.lead{font-size:18.5px;max-width:60ch;color:var(--text)}
+@media(max-width:680px){p{font-size:15.5px}.lead{font-size:17px}}
+
+/* cover */
+.eyebrow{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--magenta);font-weight:600;margin-bottom:18px}
+.ident{display:flex;flex-wrap:wrap;gap:40px;border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);
+  padding:22px 0;margin:34px 0 0;max-width:60ch}
+.ident div{flex:1;min-width:200px}
+.ident dt{font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--gray);margin-bottom:8px}
+.ident .nm{font-family:var(--serif);font-size:23px;line-height:1.2;color:var(--navy);margin-bottom:2px}
+.ident .rl,.ident .og{font-size:13.5px;color:var(--text);line-height:1.42}
+
+/* quote */
+.q{border-left:3px solid var(--magenta);padding:5px 0 5px 22px;margin:24px 0;max-width:58ch}
+.q .t{font-family:var(--serif);font-size:clamp(20px,3vw,25px);line-height:1.36;color:var(--navy)}
+.q .a{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--gray);margin-top:11px}
+
+/* callout */
+.call{border-left:3px solid var(--magenta);padding:3px 0 3px 20px;margin:24px 0;max-width:64ch}
+.call .h{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--magenta);font-weight:600;margin-bottom:9px}
+.call p{margin-bottom:11px}.call p:last-child{margin-bottom:0}
+
+/* bullets */
+ul{list-style:none;max-width:66ch;margin-bottom:16px}
+li{position:relative;padding:0 0 11px 20px;font-size:16px;line-height:1.6}
+li::before{content:"";position:absolute;left:0;top:9px;width:6px;height:6px;background:var(--magenta)}
+li strong{color:var(--navy);font-weight:600}
+@media(max-width:680px){li{font-size:15.5px}}
+
+/* waves */
+.wave{border:1px solid var(--hair);border-left:3px solid var(--blue);border-radius:3px;padding:26px 28px;margin-bottom:18px}
+.wave.hot{border-left-color:var(--magenta);background:var(--wash)}
+.wave .w{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--blue);font-weight:600;margin-bottom:8px}
+.wave.hot .w{color:var(--magenta)}
+.wave h3{font-family:var(--serif);font-weight:400;font-size:26px;color:var(--navy);margin-bottom:10px}
+.wave p{font-size:15.5px;margin-bottom:12px}
+.wave ul{margin-bottom:0}
+.wave li{font-size:15.5px;padding-bottom:9px}
+.wave li:last-child{padding-bottom:0}
+@media(max-width:680px){.wave{padding:20px 20px}}
+
+/* table */
+table{width:100%;border-collapse:collapse;margin:20px 0;font-size:15.5px}
+th{text-align:left;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--gray);font-weight:600;
+  padding:0 18px 10px 0;border-bottom:1px solid var(--hair)}
+td{padding:13px 18px 13px 0;border-bottom:1px solid #EFF3FA;vertical-align:top}
+td strong{color:var(--navy);font-weight:600}
+td.dt{color:var(--blue);white-space:nowrap;width:128px;font-weight:500}
+td.amt{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums;color:var(--navy);font-weight:600}
+tr.tot td{border-bottom:none;border-top:2px solid var(--navy);padding-top:15px;font-size:17px}
+@media(max-width:680px){table{font-size:14.5px}td.dt{width:96px}}
+
+/* investment number */
+.big{font-family:var(--serif);font-size:clamp(56px,11vw,92px);line-height:1;color:var(--navy);margin:6px 0 4px;letter-spacing:-.02em}
+.big-sub{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gray);margin-bottom:26px}
+
+/* footer */
+footer{margin-top:56px;padding-top:22px;border-top:1px solid var(--hair);font-size:11px;color:var(--gray);line-height:1.75}
+.sig{margin-top:32px;padding-top:22px;border-top:1px solid var(--hair)}
+.sig .n{font-family:var(--serif);font-size:22px;color:var(--navy);margin-bottom:3px}
+.sig .d{font-size:13.5px;color:var(--text);line-height:1.6}
+.sig a{color:var(--blue);text-decoration:none}
+
+/* ---------- print ---------- */
+@media print{
+  @page{size:letter;margin:0.6in 0.75in}
+  html,body{background:#fff!important}
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  .band-in{padding:0 0 10px!important;max-width:none!important}
+  .band-in img{height:74px!important}
+  .rule2{margin:0 0 6px!important;max-width:none!important}
+  .page{max-width:none!important;padding:0!important}
+  section{padding:20px 0 0!important;break-inside:auto}
+  h1{font-size:34pt!important}
+  h2{font-size:19pt!important;break-after:avoid}
+  h3{break-after:avoid}
+  .lab{break-after:avoid;font-size:7.5pt!important}
+  p,li{font-size:10.5pt!important;line-height:1.5!important;orphans:3;widows:3}
+  .lead{font-size:12pt!important}
+  .big{font-size:44pt!important}
+  .wave,.call,.q,.ident,table{break-inside:avoid}
+  .wave{padding:16px 18px!important;margin-bottom:12px!important}
+  a{color:var(--blue)!important;text-decoration:none}
+  footer{break-inside:avoid;margin-top:26px!important}
+  /* new page before the investment + SOW-adjacent sections */
+  section.pb{break-before:page}
+}
+</style>
+</head>
+<body>
+
+<div class="band"><div class="band-in"><img src="https://raw.githubusercontent.com/OptimaNovaAI/brand-assets/main/ONAILogowithOptimaNovaAIwords.png" alt="OptimaNova AI"></div></div>
+<div class="rule2"><span></span><span></span></div>
+
+<div class="page">
+<div id="pr" style="position:fixed;top:16px;right:16px;z-index:50">
+  <button onclick="window.print()" style="font-family:inherit;font-size:12px;font-weight:500;letter-spacing:.04em;
+    color:#2E75B6;background:#fff;border:1px solid #DCE6F1;border-radius:3px;padding:9px 15px;cursor:pointer">Print / Save PDF</button>
+</div>
+<style>@media print{#pr{display:none!important}}@media(max-width:680px){#pr{display:none}}</style>
+
+<!-- ============ COVER ============ -->
+<section style="padding-top:44px">
+  <div class="eyebrow">Phase One Proposal &middot; Confidential</div>
+  <h1>An Operation That<br>Runs Ahead Of You</h1>
+  <p class="lead">Ten weeks. The systems that carry your September, built while your September happens.</p>
+
+  <div class="ident">
+    <div><dt>Prepared For</dt>
+      <div class="nm">Kirra L. Jarratt</div>
+      <div class="rl">Chief Executive Officer</div>
+      <div class="og">DC Bar Foundation</div></div>
+    <div><dt>Prepared By</dt>
+      <div class="nm">Joe Paul</div>
+      <div class="rl">Founder and Chief Executive Officer</div>
+      <div class="og">OptimaNova AI</div></div>
+  </div>
+
+  <table style="margin-top:26px;max-width:60ch">
+    <tr><td class="dt">Issued</td><td>August 14, 2026</td></tr>
+    <tr><td class="dt">Term</td><td>August 19 through October 24, 2026</td></tr>
+    <tr><td class="dt">Investment</td><td>$52,000</td></tr>
+  </table>
+</section>
+
+<!-- ============ WHAT I HEARD ============ -->
+<section>
+  <div class="lab">What I Heard</div>
+  <h2>You Are Not Replacing An Assistant. You Are Building A Second Seat.</h2>
+
+  <p>Across a 43-minute instrument and an hour on the phone, you said the same thing three separate times without repeating yourself once.</p>
+
+  <div class="q">
+    <div class="t">I need a partner who is my #2, and that #2 is a combination of a machine and a person. I need someone who used to be a #1 who gets it, can step in for me, and is five steps ahead of me.</div>
+    <div class="a">Written response, August 11</div>
+  </div>
+
+  <div class="q">
+    <div class="t">The half person is conversation. A machine can get everything prepped, but I need the conversation dynamic.</div>
+    <div class="a">Written response, August 11</div>
+  </div>
+
+  <div class="q">
+    <div class="t">AI serves it up and a human takes it from there. So a combo.</div>
+    <div class="a">Discovery session, August 12</div>
+  </div>
+
+  <p><strong>Machine prepares. Human converses.</strong> That is the design principle, and it is yours. Everything in this proposal is built to it.</p>
+
+  <p>There was one more number worth holding onto. Given seventeen duties from your own job description and four places to put them, you sent twelve to a machine and <strong>not one to another person</strong>. Not once. In your read of that role, work is either automated, or it is yours, or it stops existing.</p>
+</section>
+
+<!-- ============ THE SHAPE ============ -->
+<section>
+  <div class="lab">The Shape Of The Work</div>
+  <h2>Build First. Document As We Go.</h2>
+
+  <p>A six-week study ending in a roadmap would hand you an answer in late September. By then the Expression of Interest responses have landed, the board book has shipped, and your fiscal year has turned. You would be paying to be told what you needed a month ago.</p>
+
+  <p>So we invert it. <strong>The systems go in first.</strong> The role design, the governance line, and the answer to what your second seat actually owns come out of what we learn running them, not out of a study that happens before them.</p>
+
+  <div class="call">
+    <div class="h">Your Words, And The Reason For This Sequence</div>
+    <p>"I don't want to build a whole new structure on a faulty foundation. I don't want to build it on humans and I don't want to build it on machines, but we've never thought about position-wise percentage allocation to different work."</p>
+    <p>That is the right instinct and it is the reason the build comes first. You cannot allocate work between people and machines until you have watched a machine do some of it.</p>
+  </div>
+
+  <p>One more thing shapes the sequence. You told me plainly: <strong>as long as you're prioritizing me, I'm fine.</strong> Phase One is you. Not the organization, not the team, not the shop. You.</p>
+</section>
+
+<!-- ============ WAVE ONE ============ -->
+<section>
+  <div class="lab">Phase One &middot; The Work</div>
+  <h2>Four Waves, Set By Your Calendar.</h2>
+  <p style="margin-bottom:26px">Every date below is one you gave me. Nothing here is arbitrary.</p>
+
+  <div class="wave hot">
+    <div class="w">Wave One &middot; August 19 to 26 &middot; Before Italy</div>
+    <h3>Running Before You Leave</h3>
+    <p>Six working days. Two systems live and in your hands before you get on a plane, plus the fix that makes the tool you already own stop lying to you.</p>
+    <ul>
+      <li><strong>The daily brief.</strong> Lands before you open your laptop. The next five to seven days of meetings, what you need to prepare for each, and what you are still owed by someone else. You asked for this by name and said "today was a day where I really needed that support."</li>
+      <li><strong>Email triage, on your rules.</strong> Board and leadership surface. Where you are clearly the one who has to respond, a draft is waiting. The listserv and newsletter volume stops arriving at all, with the exceptions you name.</li>
+      <li><strong>The Copilot prompting fix.</strong> Ten minutes of work. You have the license. It has your mailbox. It told you three, then six, then fourteen, then finally 49.2 a day with Tuesday heaviest. Only that last answer came from actually reading your mail. The rest was guessing off a sample because of how it was asked.</li>
+    </ul>
+  </div>
+
+  <div class="call" style="border-left-color:var(--blue);margin-top:6px">
+    <div class="h" style="color:var(--blue)">Why This Wave Is Not Blocked</div>
+    <p>Nothing in Wave One requires anything your IT team has to approve. It runs on what is already installed on your machine and already licensed to your account. Elio being out of the country does not sit on the critical path, and neither does the Claude conversation. Those unlock the tier after this one.</p>
+  </div>
+
+  <div class="wave">
+    <div class="w">Wave Two &middot; August 27 to September 8 &middot; While You Are Away</div>
+    <h3>Built In Your Absence</h3>
+    <p>You are in Italy and not thinking about any of it. That is the point. The three years of Asana history you sent become the specification while you are gone.</p>
+    <ul>
+      <li><strong>The return report.</strong> Waiting when you land on the 8th. What happened, what moved, what needs you first, and what is now late.</li>
+      <li><strong>Governance and fiscal year transition, mapped.</strong> Built from your board meeting, orientation, governance committee, leadership transition, and recruitment projects across FY24 through FY27. Vita held the execution. The process is still in the files.</li>
+      <li><strong>The Expression of Interest evaluation instrument.</strong> Built against your published criteria and ready before responses arrive.</li>
+    </ul>
+  </div>
+
+  <div class="wave">
+    <div class="w">Wave Three &middot; September 8 to 22 &middot; The Two Deadlines</div>
+    <h3>Through The Gauntlet</h3>
+    <p>The two hard dates in your September, met with systems instead of late nights.</p>
+    <ul>
+      <li><strong>Calendar guardrails.</strong> Meeting caps that actually hold, right-sizing 60 to 30 and 30 to 15, recovery time protected after late events, and the texture a scheduling link cannot carry.</li>
+      <li><strong>EoI responses scored, September 18.</strong> Every response evaluated against your criteria, questions generated for all candidates and for each one individually, assembled so you walk into the room already remembering what each of them said.</li>
+      <li><strong>Board book support, September 22.</strong> Template posted, link dropped, deadlines tracked, late contributors nudged without a human doing the nudging. Assembled so a person eyeballs it once before it goes out seven days ahead.</li>
+    </ul>
+  </div>
+
+  <div class="wave">
+    <div class="w">Wave Four &middot; September 22 to October 24 &middot; The Annual Cycle</div>
+    <h3>The Engine Underneath All Of It</h3>
+    <p>The board reminders, the board book workflow, and the annual calendar are not three builds. They are one engine described three ways: rules, deadlines, chasing, assembly.</p>
+    <ul>
+      <li><strong>The annual calendar.</strong> Board meetings set first, executive committee calculated at the midpoint, committee meetings sequenced far enough ahead that decisions are teed up, no three in a week, spaced around major events. Move one date and everything downstream moves with it. The Excel file stops being the only place conflicts are visible.</li>
+      <li><strong>Board outreach with escalating reminders.</strong> RSVPs, annual gifts, surveys. General messages and targeted ones, with live quorum tracking so you can say forty-nine percent have not responded and we do not have a quorum.</li>
+      <li><strong>Fiscal year transition and orientation readiness</strong> for October 1 and October 20.</li>
+      <li><strong>The role design memo.</strong> What your second seat owns on day one, what the machine hands them, and what they never hand back. Plus the governance line, written plainly enough to give your team and your IT lead.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ WHAT STAYS HUMAN ============ -->
+<section>
+  <div class="lab">The Line</div>
+  <h2>What Never Moves.</h2>
+
+  <p>You named three things you would not hand to a machine even if it did the job well: anything a board member sees first, relationship follow-up, and crisis communication. Anything with your name signed to it.</p>
+
+  <p>Everything built here defaults to <strong>draft and approve</strong>. Nothing sends without you. As trust is earned category by category, we widen it deliberately and write down what changed. You said you had not thought about who catches it when an agent gets something wrong. By the end of Phase One, that question has a written answer.</p>
+
+  <div class="call">
+    <div class="h">How We Work</div>
+    <p>AI does. Humans decide. Judgment stays with you, and accountability for the work product never transfers to a tool. That is the operating standard inside our firm and it is the one we build to inside yours.</p>
+  </div>
+</section>
+
+<!-- ============ TIMELINE ============ -->
+<section>
+  <div class="lab">Timeline</div>
+  <h2>Against Your Dates.</h2>
+  <table>
+    <tr><th>Date</th><th>What Happens</th></tr>
+    <tr><td class="dt">Aug 19</td><td><strong>Working session.</strong> Ninety minutes. I watch how you actually move through a day instead of asking you to describe it.</td></tr>
+    <tr><td class="dt">Aug 26</td><td>Daily brief and email triage running. Copilot fix in place.</td></tr>
+    <tr><td class="dt">Aug 27 to Sep 5</td><td>You are in Italy. We build.</td></tr>
+    <tr><td class="dt">Sep 8</td><td><strong>Return report waiting.</strong> Calendar guardrails begin.</td></tr>
+    <tr><td class="dt">Sep 18</td><td><strong>EoI responses scored</strong> and questions generated.</td></tr>
+    <tr><td class="dt">Sep 22</td><td><strong>Board book</strong> assembled and reviewed.</td></tr>
+    <tr><td class="dt">Oct 1</td><td>Fiscal year transition ready.</td></tr>
+    <tr><td class="dt">Oct 20</td><td>Board orientation ready to run.</td></tr>
+    <tr><td class="dt">Oct 24</td><td><strong>Close.</strong> Role design memo, governance line, and a 30-60-90 you can hand to whoever you hire.</td></tr>
+  </table>
+  <p style="font-size:14.5px;color:var(--gray);max-width:60ch">Weekly working sessions of 60 minutes throughout, plus availability between them. Delivery is remote with on-site time in Washington available at your request.</p>
+</section>
+
+<!-- ============ INVESTMENT ============ -->
+<section class="pb">
+  <div class="lab">Investment</div>
+  <div class="big">$52,000</div>
+  <div class="big-sub">Phase One &middot; Ten Weeks &middot; August 19 To October 24</div>
+
+  <table style="max-width:56ch">
+    <tr><th>Schedule</th><th style="text-align:right">Amount</th></tr>
+    <tr><td>At signing</td><td class="amt">$26,000</td></tr>
+    <tr><td>September 15</td><td class="amt">$13,000</td></tr>
+    <tr><td>October 24</td><td class="amt">$13,000</td></tr>
+    <tr class="tot"><td><strong>Total</strong></td><td class="amt">$52,000</td></tr>
+  </table>
+
+  <h3 style="margin-top:34px">The Comparison That Matters</h3>
+  <p>You told me the org chart you drew needs seven more people, and that it was bare minimum rather than pie in the sky. Loaded, seven positions run north of eight hundred thousand dollars a year, permanently, against a personnel line currently under two million.</p>
+  <p><strong>This is a fraction of that decision, once, to find out how many of those seats you actually need.</strong> Not a study that tells you. Systems that show you, by doing the work those seats would have done.</p>
+</section>
+
+<!-- ============ WHAT I NEED ============ -->
+<section>
+  <div class="lab">To Start On The 19th</div>
+  <h2>Four Things.</h2>
+  <table>
+    <tr><td class="dt">Signature</td><td>Your approval on this document, or the version of it we edit together.</td></tr>
+    <tr><td class="dt">Ninety minutes</td><td>The working session, the week of the 19th. Everything else runs off what I observe there.</td></tr>
+    <tr><td class="dt">Access</td><td>Whatever level of visibility into your calendar and mailbox you are comfortable with. We start narrow and widen as it earns it.</td></tr>
+    <tr><td class="dt">One file</td><td>Last year's annual calendar spreadsheet. Everything else I asked for has already arrived.</td></tr>
+  </table>
+  <p>Elio the first week of September, as you proposed. That conversation opens the tier beyond Wave One and nothing before it waits on him.</p>
+</section>
+
+<!-- ============ PHASE TWO ============ -->
+<section class="pb">
+  <div class="lab">What Comes After</div>
+  <h2>Phase Two Is The Organization. Deliberately Unpriced.</h2>
+
+  <p>You raised the procurement question yourself, and you were right to. Work that reaches across the Foundation may need to go through a competitive process, and I am not going to hand you a number for something you may not be able to award directly.</p>
+
+  <p>So Phase Two is described here and priced later, together, once we know which path it takes. The shape of it:</p>
+
+  <ul>
+    <li><strong>The Salesforce question.</strong> Twelve years in, an assessment that mapped every work stream, and three years later it is not where you expected. There is real opportunity in that gap.</li>
+    <li><strong>Team enablement.</strong> The systems built in Phase One only compound when the people around you can run them.</li>
+    <li><strong>Organizational governance.</strong> The policy, the boundaries, and the traffic light your team keeps saying they will write.</li>
+    <li><strong>Role and structure design</strong> across the reorganization, informed by ten weeks of watching what machines actually absorbed.</li>
+  </ul>
+
+  <div class="call">
+    <div class="h">One Disclosure</div>
+    <p>In October 2025 you shared a draft of the self-help solicitation and I returned refinements on the evaluation criteria, guardrails, and scope language. Some of that thinking may have carried into the Expression of Interest now on the street.</p>
+    <p>For that reason OptimaNova AI will not respond to that solicitation. Building you the instrument to evaluate responses is a different role than competing for the work, and I would rather name that here than have either of us discover it later.</p>
+  </div>
+</section>
+
+<!-- ============ NEXT ============ -->
+<section>
+  <div class="lab">What Happens Next</div>
+  <h2>Three Steps.</h2>
+  <ul>
+    <li><strong>Read it and poke holes.</strong> This is written in pencil. If a wave is in the wrong order or a deliverable is not the one you want, say so and it changes.</li>
+    <li><strong>Tell me the start date.</strong> The 19th is what this is built around. Later works. It just compresses what lands before Italy.</li>
+    <li><strong>We begin.</strong> Working session first, and the daily brief is in your inbox by the end of that week.</li>
+  </ul>
+
+  <p style="margin-top:26px">You said you did not want to monkey around. Neither do I. Nothing in your answers scared me, and nothing in them made me wonder how we would get it done.</p>
+
+  <div class="sig">
+    <div class="n">Joe Paul</div>
+    <div class="d">Founder and Chief Executive Officer, OptimaNova AI<br>
+    <a href="mailto:JoePaul@OptimaNova.ai">JoePaul@OptimaNova.ai</a> &nbsp;&middot;&nbsp; (202) 553-7718 &nbsp;&middot;&nbsp; <a href="https://www.OptimaNova.ai">www.OptimaNova.ai</a></div>
+  </div>
+</section>
+
+<footer>
+  Confidential. Prepared exclusively for Kirra L. Jarratt, Chief Executive Officer, DC Bar Foundation.<br>
+  OptimaNova AI &nbsp;&middot;&nbsp; Washington, D.C. &nbsp;&middot;&nbsp; August 14, 2026. Valid for thirty days.
+</footer>
+
+</div>
+</body>
+</html>
